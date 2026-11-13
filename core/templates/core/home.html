@@ -1,0 +1,663 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-section">
+	<div class="hero-slider">
+		<div class="hero-slide active" style="background-image: url('{% static 'core/images/slide1.jpeg' %}');"></div>
+		<div class="hero-slide" style="background-image: url('{% static 'core/images/slide2.jpeg' %}');"></div>
+		<div class="hero-slide" style="background-image: url('{% static 'core/images/slide3.jpeg' %}');"></div>
+		<div class="hero-slide" style="background-image: url('{% static 'core/images/slide4.jpeg' %}');"></div>
+		<div class="hero-slide" style="background-image: url('{% static 'core/images/slide5.jpeg' %}');"></div>
+	</div>
+
+	<div class="hero-overlay"></div>
+
+	<div class="hero-content">
+		<div class="hero-badge">
+			<i class="fa-solid fa-mountain-sun"></i>
+			<span>Sitio Maguey, Tubungan &bull; Tubong Turismo Project</span>
+		</div>
+
+		<div class="hero-headline-block">
+			<span class="hero-greeting">Tubong Kita!</span>
+			<h1 class="hero-title">
+				Highland Sanctuary, Native Brews
+				<span class="hero-title-sub">&amp; the <span class="highlight-gold">Sea of Clouds</span></span>
+			</h1>
+		</div>
+
+		<p class="hero-desc">
+			Maguey Café is a high-altitude ecotourism destination in Tubungan, offering heirloom Panay coffee, traditional Ilonggo cuisine, and tepee camping in collaboration with the local Panay Bukidnon indigenous community.
+		</p>
+
+		<div class="hero-actions">
+			<a href="{% url 'menu' %}" class="btn-hero-primary">
+				<i class="fa-solid fa-mug-hot"></i> Explore Brews &amp; Menu
+			</a>
+			<a href="{% url 'stay' %}" class="btn-hero-secondary">
+				<i class="fa-solid fa-campground"></i> Stay &amp; Campsite
+			</a>
+		</div>
+	</div>
+</section>
+
+
+<!-- Geographic & Atmosphere Info Section -->
+<section class="geo-info-section">
+	<div class="geo-container">
+
+		<!-- Highland Ridge Atmosphere Card -->
+		<div class="atmosphere-card">
+			<div class="atmosphere-header">
+				<div class="atmosphere-title-group">
+					<div class="atmosphere-icon-wrap">
+						<i class="fa-solid fa-cloud-sun"></i>
+					</div>
+					<div>
+						<h2 class="atmosphere-title">Highland Ridge Atmosphere</h2>
+						<p class="atmosphere-subtitle">Sitio Maguey, Brgy. Igpaho &bull; Tubungan, Iloilo</p>
+					</div>
+				</div>
+				<div class="atmosphere-status-group">
+					<span class="live-sensor-badge">
+						<span class="live-indicator-dot"></span>
+						<i class="fa-regular fa-circle-check"></i> Live Sensors
+					</span>
+					<button class="sensor-refresh-btn" id="sensorRefreshBtn" title="Refresh Live Readings" aria-label="Refresh live sensors">
+						<i class="fa-solid fa-rotate-right"></i>
+					</button>
+				</div>
+			</div>
+
+			<div class="atmosphere-grid">
+				<!-- 1. Temperature -->
+				<div class="atmosphere-metric">
+					<span class="metric-label">Temperature</span>
+					<div class="metric-value-row">
+						<span class="metric-number">21°C</span>
+						<span class="metric-badge badge-cool">Crisp Cool</span>
+					</div>
+					<span class="metric-note">Misty Highland Morning</span>
+				</div>
+
+				<!-- 2. Sea of Clouds -->
+				<div class="atmosphere-metric">
+					<span class="metric-label">Sea of Clouds</span>
+					<div class="metric-value-row">
+						<span class="metric-number">88%</span>
+						<span class="metric-badge badge-high">High</span>
+					</div>
+					<span class="metric-note">Prime: 5:30 – 7:30 AM</span>
+				</div>
+
+				<!-- 3. Elevation & Humidity -->
+				<div class="atmosphere-metric">
+					<span class="metric-label">Elevation &amp; Humidity</span>
+					<div class="metric-value-row">
+						<span class="metric-number">648m</span>
+						<span class="metric-unit">ASL</span>
+					</div>
+					<span class="metric-note"><i class="fa-solid fa-droplet text-blue"></i> 82% humidity</span>
+				</div>
+
+				<!-- 4. Sunrise & Road -->
+				<div class="atmosphere-metric">
+					<span class="metric-label">Sunrise &amp; Road</span>
+					<div class="metric-value-row">
+						<span class="metric-number"><i class="fa-solid fa-sun text-gold"></i> 05:44 AM</span>
+					</div>
+					<span class="metric-note">Clear paved road via Brgy. Igpaho</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+<!-- Featured specialties carousel -->
+<section class="specialties-section">
+	<div class="specialties-container">
+
+		<!-- Section Header -->
+		<div class="specialties-header">
+			<div class="specialties-text-group">
+				<span class="specialties-kicker">Farm-to-Cup &amp; Mountain Fare</span>
+				<h2 class="specialties-title">Highland Kitchen &amp; Native Panay Brews</h2>
+				<p class="specialties-desc">
+					Discover a Maguey favorite for every hour: sunrise breakfasts, merienda snacks, hearty highland lunches, comforting dinners, and campfire treats beneath the midnight sky.
+				</p>
+			</div>
+			<a href="{% url 'menu' %}" class="btn-view-menu">View Menu &amp; Brews</a>
+		</div>
+
+		<!-- Time-of-Day Filter Tabs -->
+		<div class="specialty-tabs" role="tablist" aria-label="Browse specialties by time of day">
+			<button class="specialty-tab active" id="specialty-tab-morning" type="button" data-index="0" role="tab" aria-controls="specialty-slide-morning" aria-selected="true">
+				<i class="fa-solid fa-cloud-sun"></i> Morning
+			</button>
+			<button class="specialty-tab" id="specialty-tab-snacks" type="button" data-index="1" role="tab" aria-controls="specialty-slide-snacks" aria-selected="false">
+				<i class="fa-solid fa-mug-hot"></i> Snacks &amp; Merienda
+			</button>
+			<button class="specialty-tab" id="specialty-tab-lunch" type="button" data-index="2" role="tab" aria-controls="specialty-slide-lunch" aria-selected="false">
+				<i class="fa-solid fa-utensils"></i> Lunch
+			</button>
+			<button class="specialty-tab" id="specialty-tab-dinner" type="button" data-index="3" role="tab" aria-controls="specialty-slide-dinner" aria-selected="false">
+				<i class="fa-solid fa-mountain-sun"></i> Dinner
+			</button>
+			<button class="specialty-tab" id="specialty-tab-midnight" type="button" data-index="4" role="tab" aria-controls="specialty-slide-midnight" aria-selected="false">
+				<i class="fa-solid fa-moon"></i> Midnight Snacks
+			</button>
+		</div>
+
+		<!-- Slider Wrapper -->
+		<div class="specialties-slider-wrap" role="region" aria-label="Featured Maguey specialties" aria-roledescription="carousel">
+			<div class="specialties-carousel">
+				<div class="specialties-track" id="specialtiesTrack" aria-live="polite">
+					
+					<!-- 1. Morning Specialty -->
+					<div class="specialty-slide" id="specialty-slide-morning" data-index="0" role="tabpanel" aria-labelledby="specialty-tab-morning" aria-roledescription="slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_morning.jpg' %}" alt="Tubungan Mountain Sunrise Combo" class="specialty-img" loading="lazy">
+								<span class="specialty-badge">Morning Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Signature Mountain Breakfast Set &bull; Includes Hot Native Brew</span>
+									<h3 class="specialty-item-title">Tubungan Mountain Sunrise Combo</h3>
+									<p class="specialty-item-desc">
+										A comforting feast for early risers and cyclists. Golden garlic sinangag rice, pan-seared Ilonggo garlic longganisa or crispy Estancia danggit, sunny farm egg, and a fresh ceramic mug of hand-poured Kape Maguey.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 12–15 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Freshly Cooked to Order</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;195</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 2. Lunch Specialty -->
+					<div class="specialty-slide" id="specialty-slide-lunch" data-index="2" role="tabpanel" aria-labelledby="specialty-tab-lunch" aria-roledescription="slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_lunch.jpg' %}" alt="Ridge-Side Native Chicken Tinola" class="specialty-img" loading="lazy">
+								<span class="specialty-badge">Lunch Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Highland Native Pot Feast &bull; Includes Upland Red Rice</span>
+									<h3 class="specialty-item-title">Ridge-Side Native Chicken Tinola with Fresh Labog</h3>
+									<p class="specialty-item-desc">
+										Free-range native Panay Bukidnon chicken simmered in an aromatic ginger and lemongrass broth with fresh wild labog leaves, green papaya, and native chili leaves. Served with organic upland red rice and calamansi dip.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 15–20 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-leaf"></i> Community-Sourced Native Hen</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;265</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 3. Snacks Specialty -->
+					<div class="specialty-slide" id="specialty-slide-snacks" data-index="1" role="tabpanel" aria-labelledby="specialty-tab-snacks" aria-roledescription="slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_snacks.jpg' %}" alt="Panay Kakanin & Tsokolate Tablea Flight" class="specialty-img" loading="lazy">
+								<span class="specialty-badge">Snacks Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Afternoon Highland Merienda &bull; Includes Native Hot Tsokolate</span>
+									<h3 class="specialty-item-title">Panay Kakanin &amp; Tsokolate Tablea Flight</h3>
+									<p class="specialty-item-desc">
+										Freshly steamed native suman latik and puto maya wrapped in fragrant banana leaves, paired with sweet Guimaras ripe mango slices and a rich, frothy earthenware mug of native stone-ground Panay tablea batirol.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 8–10 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-seedling"></i> Traditional Panay Cacao</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;165</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 4. Dinner Specialty -->
+					<div class="specialty-slide" id="specialty-slide-dinner" data-index="3" role="tabpanel" aria-labelledby="specialty-tab-dinner" aria-roledescription="slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_dinner.jpg' %}" alt="Smoked Pork Belly KBL with Native Batwan" class="specialty-img" loading="lazy">
+								<span class="specialty-badge">Dinner Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Signature Ilonggo Highland Stew &bull; Includes Sinangag &amp; Broth</span>
+									<h3 class="specialty-item-title">Smoked Pork Belly KBL with Native Batwan</h3>
+									<p class="specialty-item-desc">
+										The iconic soul of Western Visayas mountain dining: char-grilled smoked pork belly slow-braised with tender young jackfruit (langka), highland pigeon peas (kadyos), and the distinctive tart freshness of forest batwan.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 15–18 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-fire"></i> Char-Smoked Over Native Wood</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;295</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 5. Midnight Specialty -->
+					<div class="specialty-slide" id="specialty-slide-midnight" data-index="4" role="tabpanel" aria-labelledby="specialty-tab-midnight" aria-roledescription="slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_midnight.jpg' %}" alt="Stargazer Campfire S'mores & Spiced Mountain Robusta" class="specialty-img" loading="lazy">
+								<span class="specialty-badge">Midnight Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Overnight Camper Set &bull; Includes French Press Mountain Brew</span>
+									<h3 class="specialty-item-title">Stargazer Campfire S'mores &amp; Spiced Robusta</h3>
+									<p class="specialty-item-desc">
+										Curated for tepee campers and stargazers resting under Tubungan's midnight sky. Golden toasted giant marshmallows, artisan Panay dark cacao tiles, and honey graham crackers with a French press of cinnamon-spiced Kape Maguey.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 10 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-campground"></i> Ideal for Ridge Tepee Campers</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;210</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- Navigation Controls (Arrows & Dots) -->
+			<div class="specialty-nav-row">
+				<div class="specialty-dots" id="specialtyDots">
+					<button class="specialty-dot active" type="button" data-index="0" aria-label="Slide 1: Morning"></button>
+					<button class="specialty-dot" type="button" data-index="1" aria-label="Slide 2: Snacks and Merienda"></button>
+					<button class="specialty-dot" type="button" data-index="2" aria-label="Slide 3: Lunch"></button>
+					<button class="specialty-dot" type="button" data-index="3" aria-label="Slide 4: Dinner"></button>
+					<button class="specialty-dot" type="button" data-index="4" aria-label="Slide 5: Midnight Snacks"></button>
+				</div>
+				<div class="specialty-arrows">
+					<button class="specialty-arrow-btn" id="specialtyPrevBtn" type="button" aria-label="Previous specialty">
+						<i class="fa-solid fa-chevron-left"></i>
+					</button>
+					<button class="specialty-arrow-btn" id="specialtyNextBtn" type="button" aria-label="Next specialty">
+						<i class="fa-solid fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+{% comment %}
+<!-- Duplicate specialty carousel removed from the rendered homepage. -->
+<section class="specialties-section">
+	<div class="specialties-container">
+
+		<!-- Section Header -->
+		<div class="specialties-header">
+			<span class="specialties-kicker">Farm-to-Cup &amp; Mountain Fare</span>
+			<h2 class="specialties-title">Highland Kitchen &amp; Native Panay Brews</h2>
+			<p class="specialties-desc">
+				Every dish and cup celebrates the fertile slopes of Tubungan. From hand-dripped local Robusta sweetened with raw muscovado to bubbling pots of Native Chicken Tinola with fresh labog leaves.
+			</p>
+		</div>
+
+		<!-- Time-of-Day Filter Tabs -->
+		<div class="specialty-tabs" role="tablist">
+			<button class="specialty-tab active" data-index="0" role="tab" aria-selected="true">
+				<i class="fa-solid fa-cloud-sun"></i> Morning
+			</button>
+			<button class="specialty-tab" data-index="1" role="tab" aria-selected="false">
+				<i class="fa-solid fa-utensils"></i> Lunch
+			</button>
+			<button class="specialty-tab" data-index="2" role="tab" aria-selected="false">
+				<i class="fa-solid fa-mug-hot"></i> Snacks &amp; Merienda
+			</button>
+			<button class="specialty-tab" data-index="3" role="tab" aria-selected="false">
+				<i class="fa-solid fa-mountain-sun"></i> Dinner
+			</button>
+			<button class="specialty-tab" data-index="4" role="tab" aria-selected="false">
+				<i class="fa-solid fa-moon"></i> Midnight Stargazer
+			</button>
+		</div>
+
+		<!-- Slider Wrapper -->
+		<div class="specialties-slider-wrap">
+			<div class="specialties-carousel">
+				<div class="specialties-track" id="specialtiesTrack">
+					
+					<!-- 1. Morning Specialty -->
+					<div class="specialty-slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_morning.jpg' %}" alt="Tubungan Mountain Sunrise Combo" class="specialty-img">
+								<span class="specialty-badge">Morning Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Signature Mountain Breakfast Set &bull; Includes Hot Native Brew</span>
+									<h3 class="specialty-item-title">Tubungan Mountain Sunrise Combo</h3>
+									<p class="specialty-item-desc">
+										A comforting feast for early risers and cyclists. Golden garlic sinangag rice, pan-seared Ilonggo garlic longganisa or crispy Estancia danggit, sunny farm egg, and a fresh ceramic mug of hand-poured Kape Maguey.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 12–15 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Freshly Cooked to Order</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;195</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 2. Lunch Specialty -->
+					<div class="specialty-slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_lunch.jpg' %}" alt="Ridge-Side Native Chicken Tinola" class="specialty-img">
+								<span class="specialty-badge">Lunch Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Highland Native Pot Feast &bull; Includes Upland Red Rice</span>
+									<h3 class="specialty-item-title">Ridge-Side Native Chicken Tinola with Fresh Labog</h3>
+									<p class="specialty-item-desc">
+										Free-range native Panay Bukidnon chicken simmered in an aromatic ginger and lemongrass broth with fresh wild labog leaves, green papaya, and native chili leaves. Served with organic upland red rice and calamansi dip.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 15–20 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-leaf"></i> Community-Sourced Native Hen</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;265</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 3. Snacks Specialty -->
+					<div class="specialty-slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_snacks.jpg' %}" alt="Panay Kakanin & Tsokolate Tablea Flight" class="specialty-img">
+								<span class="specialty-badge">Snacks Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Afternoon Highland Merienda &bull; Includes Native Hot Tsokolate</span>
+									<h3 class="specialty-item-title">Panay Kakanin &amp; Tsokolate Tablea Flight</h3>
+									<p class="specialty-item-desc">
+										Freshly steamed native suman latik and puto maya wrapped in fragrant banana leaves, paired with sweet Guimaras ripe mango slices and a rich, frothy earthenware mug of native stone-ground Panay tablea batirol.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 8–10 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-seedling"></i> Traditional Panay Cacao</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;165</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 4. Dinner Specialty -->
+					<div class="specialty-slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_dinner.jpg' %}" alt="Smoked Pork Belly KBL with Native Batwan" class="specialty-img">
+								<span class="specialty-badge">Dinner Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Signature Ilonggo Highland Stew &bull; Includes Sinangag &amp; Broth</span>
+									<h3 class="specialty-item-title">Smoked Pork Belly KBL with Native Batwan</h3>
+									<p class="specialty-item-desc">
+										The iconic soul of Western Visayas mountain dining: char-grilled smoked pork belly slow-braised with tender young jackfruit (langka), highland pigeon peas (kadyos), and the distinctive tart freshness of forest batwan.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 15–18 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-fire"></i> Char-Smoked Over Native Wood</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;295</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 5. Midnight Specialty -->
+					<div class="specialty-slide">
+						<div class="specialty-card">
+							<div class="specialty-media">
+								<img src="{% static 'core/images/specialty_midnight.jpg' %}" alt="Stargazer Campfire S'mores & Spiced Mountain Robusta" class="specialty-img">
+								<span class="specialty-badge">Midnight Specialty</span>
+							</div>
+							<div class="specialty-content">
+								<div class="specialty-info-top">
+									<span class="specialty-category">Overnight Camper Set &bull; Includes French Press Mountain Brew</span>
+									<h3 class="specialty-item-title">Stargazer Campfire S'mores &amp; Spiced Robusta</h3>
+									<p class="specialty-item-desc">
+										Curated for tepee campers and stargazers resting under Tubungan's midnight sky. Golden toasted giant marshmallows, artisan Panay dark cacao tiles, and honey graham crackers with a French press of cinnamon-spiced Kape Maguey.
+									</p>
+									<div class="specialty-meta-tags">
+										<span class="specialty-meta-tag"><i class="fa-regular fa-clock"></i> Prep: 10 mins</span>
+										<span class="specialty-meta-tag"><i class="fa-solid fa-campground"></i> Ideal for Ridge Tepee Campers</span>
+									</div>
+								</div>
+								<div class="specialty-footer">
+									<div class="specialty-price-block">
+										<span class="price-label">Special Set Price</span>
+										<span class="price-value">&#8369;210</span>
+									</div>
+									<a href="{% url 'menu' %}" class="btn-add-combo">
+										<i class="fa-solid fa-plus"></i> Add Combo to Order
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- Navigation Controls (Arrows & Dots) -->
+			<div class="specialty-nav-row">
+				<div class="specialty-dots" id="specialtyDots">
+					<button class="specialty-dot active" data-index="0" aria-label="Slide 1: Morning"></button>
+					<button class="specialty-dot" data-index="1" aria-label="Slide 2: Lunch"></button>
+					<button class="specialty-dot" data-index="2" aria-label="Slide 3: Snacks"></button>
+					<button class="specialty-dot" data-index="3" aria-label="Slide 4: Dinner"></button>
+					<button class="specialty-dot" data-index="4" aria-label="Slide 5: Midnight"></button>
+				</div>
+				<div class="specialty-arrows">
+					<button class="specialty-arrow-btn" id="specialtyPrevBtn" aria-label="Previous Specialty">
+						<i class="fa-solid fa-chevron-left"></i>
+					</button>
+					<button class="specialty-arrow-btn" id="specialtyNextBtn" aria-label="Next Specialty">
+						<i class="fa-solid fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+{% endcomment %}
+
+<!-- Homepage interactions -->
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const heroSlides = Array.from(document.querySelectorAll('.hero-slide'));
+		if (heroSlides.length > 1) {
+			let heroIndex = 0;
+			setInterval(() => {
+				const previousIndex = heroIndex;
+				heroIndex = (heroIndex + 1) % heroSlides.length;
+				heroSlides.forEach((slide, index) => {
+					if (index !== previousIndex && index !== heroIndex) {
+						slide.classList.remove('active', 'prev');
+					}
+				});
+				heroSlides[previousIndex].classList.remove('active');
+				heroSlides[previousIndex].classList.add('prev');
+				heroSlides[heroIndex].classList.remove('prev');
+				heroSlides[heroIndex].classList.add('active');
+			}, 5000);
+		}
+
+		const specialtySection = document.querySelector('.specialties-section');
+		if (specialtySection) {
+			const track = specialtySection.querySelector('.specialties-track');
+			const slides = Array.from(track.querySelectorAll('.specialty-slide'))
+				.sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+			const tabs = Array.from(specialtySection.querySelectorAll('.specialty-tab'));
+			const dots = Array.from(specialtySection.querySelectorAll('.specialty-dot'));
+			const previousButton = specialtySection.querySelector('#specialtyPrevBtn');
+			const nextButton = specialtySection.querySelector('#specialtyNextBtn');
+			let currentIndex = 0;
+
+			slides.forEach((slide) => track.appendChild(slide));
+
+			function showSlide(index) {
+				currentIndex = (index + slides.length) % slides.length;
+				track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+				slides.forEach((slide, slideIndex) => {
+					const isActive = slideIndex === currentIndex;
+					slide.setAttribute('aria-hidden', String(!isActive));
+					slide.inert = !isActive;
+				});
+				tabs.forEach((tab, tabIndex) => {
+					const isActive = tabIndex === currentIndex;
+					tab.classList.toggle('active', isActive);
+					tab.setAttribute('aria-selected', String(isActive));
+					tab.tabIndex = isActive ? 0 : -1;
+				});
+				dots.forEach((dot, dotIndex) => {
+					dot.classList.toggle('active', dotIndex === currentIndex);
+				});
+			}
+
+			tabs.forEach((tab, index) => {
+				tab.addEventListener('click', () => showSlide(index));
+				tab.addEventListener('keydown', (event) => {
+					if (event.key === 'ArrowRight') {
+						event.preventDefault();
+						const nextIndex = (index + 1) % tabs.length;
+						showSlide(nextIndex);
+						tabs[nextIndex].focus();
+					} else if (event.key === 'ArrowLeft') {
+						event.preventDefault();
+						const previousIndex = (index + tabs.length - 1) % tabs.length;
+						showSlide(previousIndex);
+						tabs[previousIndex].focus();
+					} else if (event.key === 'Home' || event.key === 'End') {
+						event.preventDefault();
+						const targetIndex = event.key === 'Home' ? 0 : tabs.length - 1;
+						showSlide(targetIndex);
+						tabs[targetIndex].focus();
+					}
+				});
+			});
+			dots.forEach((dot, index) => {
+				dot.addEventListener('click', () => showSlide(index));
+			});
+			previousButton.addEventListener('click', () => showSlide(currentIndex - 1));
+			nextButton.addEventListener('click', () => showSlide(currentIndex + 1));
+			showSlide(0);
+		}
+
+		const refreshBtn = document.getElementById('sensorRefreshBtn');
+		if (refreshBtn) {
+			refreshBtn.addEventListener('click', () => {
+				refreshBtn.classList.add('rotating');
+				setTimeout(() => refreshBtn.classList.remove('rotating'), 600);
+			});
+		}
+	});
+
+</script>
+
+{% endblock %}

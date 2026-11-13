@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Maguey Cafe | Tubungan, Iloilo{% endblock %}</title>
+	<link rel="icon" type="image/svg+xml" href="{% static 'core/images/favicon.svg' %}">
+	<!-- Google Fonts: Fraunces (Highland Organic Serif) & Plus Jakarta Sans (Clean Modern Sans) -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+</head>
+<body>
+
+	<header class="site-header">
+		<div class="nav-container">
+			
+			<!-- Left: Brand Logo -->
+			<a href="{% url 'home' %}" class="brand">
+				<div class="brand-icon">
+					<i class="fa-solid fa-mug-hot"></i>
+				</div>
+				<div class="brand-text">
+					<span class="brand-title">Maguey Cafe</span>
+					<span class="brand-subtitle">Tubungan, Iloilo</span>
+				</div>
+			</a>
+
+			<!-- Center: Nav LInks -->
+			<nav class="main-nav">
+				<ul class="nav-list">
+					<li><a href="{% url 'menu' %}">Menu and Brews</a></li>
+					<li><a href="{% url 'stay' %}">Stay and Campsite</a></li>
+					<li><a href="{% url 'heritage' %}">Heritage and Project</a></li>
+
+					<!-- Dropdown: Gallery, contact and Extras -->
+					<li class="dropdown">
+						<button class="dropbtn" type="button" aria-expanded="false">
+							Explore <i class="fa-solid fa-chevron-down dropdown-chevron"></i>
+						</button>
+						<ul class="dropdown-menu">
+						    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+						    <li><a href="{% url 'trail_guide' %}">Trail Guide</a></li>
+						    <li><a href="{% url 'guestbook' %}">Guestbook</a></li>
+						</ul>
+					</li>
+					<li><a href="{% url 'contact' %}">Contact Us</a></li>
+				</ul>
+			</nav>
+
+			<!-- Right: Basket and Table Button -->
+			<div class="nav-actions">
+				<a href="#" class="icon-btn" aria-label="Order Basket">
+					<i class="fa-solid fa-bag-shopping"></i>
+				</a>
+				<a href="{% url 'book_table' %}" class="btn-primary">
+					<i class="fa-regular fa-calendar"></i>Book Table
+				</a>
+			</div>
+		</div>
+	</header>
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const dropdowns = document.querySelectorAll('.dropdown');
+
+			dropdowns.forEach((dropdown) => {
+				const dropbtn = dropdown.querySelector('.dropbtn');
+				if (!dropbtn) return;
+
+				dropbtn.addEventListener('click', (e) => {
+					e.stopPropagation();
+					dropdowns.forEach((other) => {
+						if (other !== dropdown) {
+							other.classList.remove('active');
+							const otherBtn = other.querySelector('.dropbtn');
+							if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+						}
+					});
+
+					const isOpen = dropdown.classList.toggle('active');
+					dropbtn.setAttribute('aria-expanded', isOpen);
+				});
+			});
+
+			// Close dropdowns when clicking outside
+			document.addEventListener('click', () => {
+				dropdowns.forEach((dropdown) => {
+					dropdown.classList.remove('active');
+					const dropbtn = dropdown.querySelector('.dropbtn');
+					if (dropbtn) dropbtn.setAttribute('aria-expanded', 'false');
+				});
+			});
+
+			// Close dropdowns on Escape key
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape') {
+					dropdowns.forEach((dropdown) => {
+						dropdown.classList.remove('active');
+						const dropbtn = dropdown.querySelector('.dropbtn');
+						if (dropbtn) dropbtn.setAttribute('aria-expanded', 'false');
+					});
+				}
+			});
+		});
+	</script>
+</body>
+</html>
